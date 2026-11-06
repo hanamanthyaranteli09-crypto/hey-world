@@ -1,0 +1,508 @@
+
+<section id="studentDashboard" class="student-dashboard">
+
+  <!-- Welcome Header -->
+  <div class="student-welcome">
+    <div>
+      <span class="section-label">STUDENT PORTAL</span>
+      <h1>My Dashboard <span>👋</span></h1>
+      <p>Manage your academic profile and account securely.</p>
+    </div>
+    <div class="welcome-icon">🎓</div>
+  </div>
+
+  <!-- Student Profile -->
+  <div class="profile-card">
+    <div class="profile-heading">
+      <div class="profile-avatar">👤</div>
+      <div>
+        <h2 id="studentName">Your Full Name</h2>
+        <p>First-Year Engineering Student</p>
+        <span class="status-badge">● Student Account</span>
+      </div>
+    </div>
+
+    <div class="profile-divider"></div>
+
+    <h3 class="card-heading">Personal & Academic Information</h3>
+
+    <div class="profile-grid">
+      <div class="profile-field">
+        <label>Admission Card Number</label>
+        <p id="admitCardNumber">Enter Admission Number</p>
+      </div>
+
+      <div class="profile-field">
+        <label>Username</label>
+        <p id="studentUsername">Your Student ID</p>
+      </div>
+
+      <div class="profile-field">
+        <label>Department</label>
+        <p>Computer Science & Engineering</p>
+        <p>AIML</p>
+        <P>IOT</P>
+        <P>Electronics and Communication</P>
+        <p>civil engineering</p>
+      
+       </div>
+
+      <div class="profile-field">
+        <label>Academic Year</label>
+        <p>First Year</p>
+      </div>
+
+      <div class="profile-field">
+        <label>Semester</label>
+        <p>Semester 1</p>
+      </div>
+
+      <div class="profile-field">
+        <label>College</label>
+        <p>Rajarajeswari College of Engineering</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Account Security -->
+  <div class="security-card">
+    <div class="security-heading">
+      <div class="security-icon">🔐</div>
+      <div>
+        <h2>Account Security</h2>
+        <p>Keep your student account protected.</p>
+      </div>
+    </div>
+
+    <div class="password-row">
+      <div>
+        <h3>Password</h3>
+        <p>Your password is private and protected.</p>
+      </div>
+      <button type="button" class="change-password-btn"
+              id="togglePasswordForm">
+        🔑 Change Password
+      </button>
+    </div>
+
+    <form id="passwordForm" class="password-form hidden">
+      <label for="currentPassword">Current Password</label>
+      <input type="password" id="currentPassword"
+             autocomplete="current-password" required>
+
+      <label for="newPassword">New Password</label>
+      <input type="password" id="newPassword"
+             autocomplete="new-password"
+             minlength="12" required>
+
+      <label for="confirmPassword">Confirm New Password</label>
+      <input type="password" id="confirmPassword"
+             autocomplete="new-password"
+             minlength="12" required>
+
+      <p class="password-hint">
+        Use at least 12 characters. Never share your password.
+      </p>
+
+      <button type="submit" class="save-password-btn">
+        Update Password
+      </button>
+
+      <p id="passwordMessage" role="status"></p>
+    </form>
+  </div>
+
+</section>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freshman Guide | Student Portal</title>
+<style>
+:root {
+  --navy:#102443;
+  --blue:#3478f6;
+  --light:#f3f7ff;
+  --text:#1c2c49;
+  --muted:#72819b;
+  --border:#e3ebf8;
+  --white:#fff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{font-family:Inter,"Segoe UI",Arial,sans-serif;background:var(--light);color:var(--text)}
+a{text-decoration:none;color:inherit}
+button,input{font:inherit}
+.sidebar{
+  position:fixed;inset:0 auto 0 0;width:235px;background:var(--navy);
+  color:white;padding:25px 14px;overflow-y:auto;z-index:20
+}
+.logo{display:flex;align-items:center;gap:11px;padding:0 8px 28px}
+.logo-icon{font-size:32px}
+.logo h2{font-size:19px}
+.logo p{font-size:11px;color:#afc0dc;margin-top:4px}
+.nav-label{font-size:10px;letter-spacing:2px;color:#8196b7;padding:12px}
+.nav-link{
+  display:flex;align-items:center;gap:12px;padding:12px;
+  margin:4px 0;border-radius:10px;font-size:13px;color:#dbe5f6;
+  transition:.2s
+}
+.nav-link:hover,.nav-link.active{background:#2d62ce;color:white}
+.nav-link span{width:22px;text-align:center;font-size:17px}
+.sidebar-footer{margin-top:45px;text-align:center;color:#91a6c5;font-size:12px}
+.topbar{
+  position:fixed;top:0;left:235px;right:0;height:65px;z-index:15;
+  background:#ffffffed;backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);display:flex;
+  align-items:center;justify-content:space-between;padding:0 28px;gap:16px
+}
+.search{max-width:360px;width:48%;position:relative}
+.search input{
+  width:100%;padding:11px 15px 11px 38px;border:1px solid var(--border);
+  background:#f4f7fc;border-radius:25px;outline:none;font-size:13px
+}
+.search input:focus{border-color:var(--blue)}
+.search span{position:absolute;left:13px;top:9px}
+.top-actions{display:flex;align-items:center;gap:17px;font-size:13px}
+.avatar{width:34px;height:34px;border-radius:50%;background:#d8e8ff;display:grid;place-items:center}
+.menu-button{display:none;border:0;background:none;font-size:24px;cursor:pointer}
+main{margin-left:235px;padding:85px 25px 25px;max-width:1800px}
+.hero{
+  min-height:210px;border-radius:16px;padding:34px;
+  display:flex;align-items:center;overflow:hidden;position:relative;
+  color:white;background:linear-gradient(110deg,#102443 10%,#1c4d91 65%,#478ef1)
+}
+.hero:after{content:"🎓";position:absolute;right:7%;font-size:125px;opacity:.18}
+.hero-content{position:relative;z-index:1;max-width:600px}
+.eyebrow{font-size:10px;letter-spacing:2px;font-weight:700;color:#a9d7ff}
+.hero h1{font-size:clamp(27px,3vw,38px);line-height:1.2;margin:12px 0}
+.hero h1 em{font-style:normal;color:#64c8ff}
+.hero p{font-size:13px;color:#e0eafa;max-width:430px}
+.primary{
+  display:inline-block;margin-top:20px;background:#3d8bff;color:white;
+  padding:12px 17px;border-radius:9px;font-size:12px;font-weight:700
+}
+.section{margin-top:27px;scroll-margin-top:85px}
+.section-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}
+.section-heading h2{font-size:19px}
+.section-heading p{font-size:11px;color:var(--muted);margin-top:3px}
+.view-all{font-size:11px;color:var(--blue);font-weight:700}
+.layout{display:grid;grid-template-columns:1.6fr 1fr;gap:16px}
+.panel,.card{
+  background:white;border:1px solid var(--border);border-radius:13px;
+  padding:18px;min-width:0
+}
+.panel-title{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.panel-title h3{font-size:14px}
+.panel-title p{font-size:11px;color:var(--muted);margin-top:3px}
+.panel-icon{width:35px;height:35px;border-radius:10px;background:#eaf1ff;
+display:grid;place-items:center;font-size:18px;flex-shrink:0}
+.quick-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.quick{
+  display:block;padding:15px 12px;border-radius:11px;
+  border:1px solid var(--border);background:#f9fbff;transition:.2s
+}
+.quick:hover,.card:hover{transform:translateY(-3px);box-shadow:0 8px 24px #183b7010}
+.quick-icon{width:40px;height:40px;border-radius:50%;background:#e2edff;
+display:grid;place-items:center;font-size:20px;margin-bottom:12px}
+.quick h3{font-size:12px;margin-bottom:5px}
+.quick p{font-size:11px;color:var(--muted);line-height:1.5}
+.update{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #edf1f8}
+.update:last-child{border-bottom:0}
+.dot{width:7px;height:7px;background:#8463ed;border-radius:50%;margin-top:6px;flex-shrink:0}
+.update h4{font-size:12px;margin-bottom:4px}
+.update p{font-size:11px;color:var(--muted);line-height:1.5}
+.badge{display:inline-block;background:#eaf1ff;color:#3568cf;padding:4px 7px;
+border-radius:15px;font-size:9px;white-space:nowrap}
+.content-grid{display:grid;grid-template-columns:1.15fr 1.3fr 1.05fr 1.05fr;gap:12px}
+.mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.mini-card{padding:12px 9px;background:#f8faff;border:1px solid var(--border);border-radius:9px}
+.mini-card span{font-size:21px}
+.mini-card h4{font-size:10px;line-height:1.5;margin-top:7px}
+.mini-card p{font-size:10px;color:var(--muted);margin-top:4px}
+table{width:100%;border-collapse:collapse;font-size:10px}
+th,td{text-align:left;padding:10px 6px;border-bottom:1px solid var(--border)}
+th{background:#eef4ff;color:#315aa8}
+td{color:#566681}
+.table-wrap{overflow-x:auto}
+.person{display:flex;gap:10px;align-items:center;padding:11px 0;border-bottom:1px solid var(--border)}
+.person:last-child{border-bottom:0}
+.person-icon{width:35px;height:35px;border-radius:50%;display:grid;place-items:center;background:#e8f0ff}
+.person h4{font-size:11px}
+.person p{font-size:10px;color:var(--muted);margin-top:4px;overflow-wrap:anywhere}
+.contact{display:flex;justify-content:space-between;align-items:center;gap:7px;padding:11px 0;border-bottom:1px solid var(--border)}
+.contact:last-child{border:0}
+.contact h4{font-size:11px}
+.contact p{font-size:10px;color:var(--muted);margin-top:3px}
+.call{font-size:10px;font-weight:700;color:#14764d;background:#e2f8ec;border-radius:8px;padding:7px;white-space:nowrap}
+.bottom-grid{display:grid;grid-template-columns:1.2fr 1.1fr 1fr 1.2fr 1fr;gap:12px}
+.guide-step{display:flex;gap:10px;margin:15px 0}
+.number{background:#e7efff;color:#3169db;border-radius:50%;width:25px;height:25px;display:grid;place-items:center;font-size:10px;font-weight:bold;flex-shrink:0}
+.guide-step h4{font-size:11px}
+.guide-step p{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.5}
+.list-row{display:flex;align-items:flex-start;gap:9px;padding:10px 0;border-bottom:1px solid #edf1f8}
+.list-row:last-child{border:0}
+.list-row h4{font-size:10px}
+.list-row p{font-size:10px;color:var(--muted);margin-top:3px}
+.check{color:#3478f6;font-weight:bold}
+.resource{display:flex;gap:9px;align-items:center;margin:10px 0;padding:10px;border-radius:9px;background:#f7f9ff}
+.resource-icon{font-size:20px}
+.resource h4{font-size:10px}
+.resource p{font-size:9px;color:var(--muted);margin-top:3px}
+.resource a{color:var(--blue)}
+footer{margin-top:30px;padding:20px;border-top:1px solid var(--border);
+color:var(--muted);font-size:11px;display:flex;justify-content:space-between;gap:12px}
+.hidden{display:none!important}
+@media(max-width:1350px){
+ .content-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .bottom-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:950px){
+ .sidebar{transform:translateX(-100%);transition:.25s;box-shadow:8px 0 30px #0002}
+ .sidebar.open{transform:translateX(0)}
+ .topbar{left:0;padding:0 16px}
+ .menu-button{display:block}
+ main{margin-left:0;padding:82px 16px 20px}
+ .quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:600px){
+ .top-actions .profile-label{display:none}
+ .hero{padding:25px 20px;min-height:225px}
+ .hero:after{right:0;font-size:85px;bottom:0}
+ .layout{grid-template-columns:1fr}
+ .content-grid,.bottom-grid{grid-template-columns:1fr}
+ .panel{padding:14px}
+ .section-heading h2{font-size:17px}
+ footer{flex-direction:column}
+}
+</style>
+</head> <script src="script.js"></script>
+<body>
+
+<aside class="sidebar" id="sidebar">
+  <div class="logo">
+    <div class="logo-icon">🎓</div>
+    <div><h2>Freshman Guide</h2><p>Your College Companion</p></div>
+  </div>
+  <p class="nav-label">STUDENT MENU</p>
+  <nav id="navigation">
+    <a class="nav-link active" href="#home"><span>⌂</span>Home</a>
+    <a class="nav-link" href="#departments"><span>🏛</span>Departments</a>
+    <a class="nav-link" href="#timetable"><span>▦</span>Timetables</a>
+    <a class="nav-link" href="#faculty"><span>♙</span>Faculty</a>
+    <a class="nav-link" href="#emergency"><span>☎</span>Emergency Contacts</a>
+    <a class="nav-link" href="#beginners"><span>▤</span>Beginner's Guide</a>
+    <a class="nav-link" href="#updates"><span>♧</span>Daily Updates</a>
+    <a class="nav-link" href="#clubs"><span>♧</span>Clubs & Groups</a>
+    <a class="nav-link" href="#administration"><span>🏢</span>Administration</a>
+    <a class="nav-link" href="#rules"><span>☷</span>Rules & Regulations</a>
+    <a class="nav-link" href="#resources"><span>↗</span>Additional Resources</a>
+  </nav>
+  <div class="sidebar-footer">✦ Learn · Grow · Succeed ✦</div>
+</aside>
+
+<header class="topbar">
+  <button class="menu-button" id="menuButton" aria-label="Open menu">☰</button>
+  <div class="search"><span>⌕</span><input id="search" type="search" placeholder="Search anything..."></div>
+  <div class="top-actions"><span>♧</span><div class="avatar">👤</div><span class="profile-label">Student Portal</span></div>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-content">
+    <p class="eyebrow">WELCOME TO YOUR CAMPUS</p>
+    <h1>Your Engineering Journey<br><em>Starts Here!</em></h1>
+    <p>Everything a first-year engineering student needs, all in one place.</p>
+    <a class="primary" href="#beginners">Explore Beginner's Guide →</a>
+  </div>
+</section>
+
+<div class="layout section">
+  <section class="panel searchable">
+    <div class="panel-title"><div class="panel-icon">⚡</div><div><h3>Quick Access</h3><p>Jump to the most important sections</p></div></div>
+    <div class="quick-grid">
+      <a class="quick" href="#departments"><div class="quick-icon">🏛️</div><h3>Departments</h3><p>Explore engineering branches</p></a>
+      <a class="quick" href="#timetable"><div class="quick-icon">🗓️</div><h3>Timetables</h3><p>Check your class schedule</p></a>
+      <a class="quick" href="#faculty"><div class="quick-icon">👨‍🏫</div><h3>Faculty</h3><p>Find faculty information</p></a>
+      <a class="quick" href="#emergency"><div class="quick-icon">🚨</div><h3>Emergency</h3><p>Find important contacts</p></a>
+    </div>
+  </section>
+  <section class="panel searchable" id="updates">
+    <div class="panel-title"><div class="panel-icon">📢</div><div><h3>Daily Updates</h3><p>Campus announcements</p></div></div>
+    <div class="update"><span class="dot"></span><div><span class="badge">Academic</span><h4>Class Schedule</h4><p>Check the official timetable for changes.</p></div></div>
+    <div class="update"><span class="dot" style="background:#13aa8b"></span><div><span class="badge">Students</span><h4>Library Reminder</h4><p>Follow library timings and return books on time.</p></div></div>
+    <div class="update"><span class="dot" style="background:#ff9d37"></span><div><span class="badge">Events</span><h4>Club Activities</h4><p>Check notices for upcoming events.</p></div></div>
+  </section>
+</div>
+
+<div class="content-grid section">
+<section class="panel searchable" id="departments">
+  <div class="panel-title"><div class="panel-icon">🏛️</div><div><h3>Departments</h3><p>Explore engineering branches</p></div></div>
+  <div class="mini-grid">
+    <div class="mini-card"><span>💻</span><h4>Computer Science & Engineering</h4></div>
+    <div class="mini-card"><span>⚡</span><h4>Electrical Engineering</h4></div>
+    <div class="mini-card"><span>⚙️</span><h4>Mechanical Engineering</h4></div>
+    <div class="mini-card"><span>🏗️</span><h4>Civil Engineering</h4></div>
+    <div class="mini-card"><span>🔌</span><h4>Electronics Engineering</h4></div>
+    <div class="mini-card"><span>＋</span><h4>More Departments</h4></div>
+  </div>
+  <p style="font-size:10px;color:var(--muted);margin-top:12px">Replace with your college's actual departments.</p>
+</section>
+
+<section class="panel searchable" id="timetable">
+  <div class="panel-title"><div class="panel-icon">🗓️</div><div><h3>Class Timetable</h3><p>Sample weekly class schedule</p></div></div>
+  <div class="table-wrap"><table>
+    <section id ="departments">
+     <h2>Department & Timetables<h2>
+     <div class="timetale-box">
+     <label>Select Department:</label>
+     <select id="department'
+      onchange="showTimetabel()">
+       <option value="Computer Science Engineering">computer science engennering</option>
+       <option value="AIML">AIML</option>
+       <option value="Civil engineering">civil engineering</option>
+       <option value="Mechanical engineering">Mechanical Engineering</option>
+       <option value="Information Science">Information Science</option>
+       </select>
+ <lable>Select Semester</lable>
+   <option value="semester">
+   <option value="">choose Semester</option>               
+   <optionvalue="">1st Semester</option>
+   <option value="">2nd Semester</option>
+      </div>
+      <select>
+      </select>
+         <select id="section</label>
+      <select id="section">
+   <option value=""Choose Section></option>
+   <option value="A">Section A</option>
+   <option value="B">Section B</option>
+   <option value="C">Section C</option>
+       </select>
+   <button onclick="showTimetable()">
+       View Timetable
+ </button>
+   </div>
+    </h2>
+    </section>
+
+<section class="panel searchable" id="faculty">
+  <div class="panel-title"><div class="panel-icon">👨‍🏫</div><div><h3>Faculty Directory</h3><p>Meet your faculty</p></div></div>
+  <div class="person"><div class="person-icon">👩‍🏫</div><div><h4>Class Coordinator</h4><p>Add official name and email</p></div></div>
+  <div class="person"><div class="person-icon">👨‍🏫</div><div><h4>C Programming Faculty</h4><p>Add official name and email</p></div></div>
+  <div class="person"><div class="person-icon">👩‍🏫</div><div><h4>Mathematics Faculty</h4><p>Add official name and email</p></div></div>
+</section>
+
+<section class="panel searchable" id="emergency">
+  <div class="panel-title"><div class="panel-icon">🚨</div><div><h3>Emergency Contacts</h3><p>Important helplines</p></div></div>
+  <div class="contact"><div><h4>🚑 Ambulance</h4><p>Emergency assistance</p></div><a class="call" href="tel:112">Call 112</a></div>
+  <div class="contact"><div><h4>🚓 Police</h4><p>Emergency assistance</p></div><a class="call" href="tel:112">Call 112</a></div>
+  <div class="contact"><div><h4>🏥 Health Centre</h4><p>Add verified contact</p></div></div>
+  <div class="contact"><div><h4>🛡️ Campus Security</h4><p>Add verified contact</p></div></div>
+  <p style="font-size:10px;color:var(--muted);margin-top:8px">112 is India's emergency response number.</p>
+</section>
+</div>
+
+<div class="bottom-grid section">
+<section class="panel searchable" id="beginners">
+  <div class="panel-title"><div class="panel-icon">📘</div><div><h3>Beginner's Guide</h3><p>Step-by-step guidance</p></div></div>
+  <div class="guide-step"><span class="number">01</span><div><h4>Understand Your Campus</h4><p>Locate classrooms, labs and library.</p></div></div>
+  <div class="guide-step"><span class="number">02</span><div><h4>Learn Your Subjects</h4><p>Know your syllabus and exams.</p></div></div>
+  <div class="guide-step"><span class="number">03</span><div><h4>Start Programming</h4><p>Learn C basics and practise coding.</p></div></div>
+  <div class="guide-step"><span class="number">04</span><div><h4>Manage Your Time</h4><p>Revise lessons regularly.</p></div></div>
+  <div class="guide-step"><span class="number">05</span><div><h4>Get Involved</h4><p>Meet people and join activities.</p></div></div>
+</section>
+
+<section class="panel searchable" id="clubs">
+  <div class="panel-title"><div class="panel-icon">🤝</div><div><h3>Clubs & Groups</h3><p>Find your community</p></div></div>
+  <div class="mini-grid">
+    <div class="mini-card"><span>💻</span><h4>Coding Club</h4><p>Programming</p></div>
+    <div class="mini-card"><span>🤖</span><h4>Robotics Club</h4><p>Innovation</p></div>
+    <div class="mini-card"><span>🎵</span><h4>Cultural Club</h4><p>Music and dance</p></div>
+    <div class="mini-card"><span>🏆</span><h4>Sports Club</h4><p>Sports activities</p></div>
+  </div>
+</section>
+
+<section class="panel searchable" id="administration">
+  <div class="panel-title"><div class="panel-icon">🏢</div><div><h3>Administration</h3><p>Offices and contacts</p></div></div>
+  <div class="list-row"><span>🏛️</span><div><h4>Principal's Office</h4><p>Academic leadership</p></div></div>
+  <div class="list-row"><span>📝</span><div><h4>Admission Office</h4><p>Admission and records</p></div></div>
+  <div class="list-row"><span>📋</span><div><h4>Examination Cell</h4><p>Exam schedules and results</p></div></div>
+  <div class="list-row"><span>💬</span><div><h4>Student Support</h4><p>Guidance and assistance</p></div></div>
+</section>
+
+<section class="panel searchable" id="rules">
+  <div class="panel-title"><div class="panel-icon">📋</div><div><h3>Rules & Regulations</h3><p>Maintain discipline and safety</p></div></div>
+  <div class="list-row"><span class="check">●</span><div><h4>Attend classes regularly.</h4></div></div>
+  <div class="list-row"><span class="check">●</span><div><h4>Carry your student ID.</h4></div></div>
+  <div class="list-row"><span class="check">●</span><div><h4>Follow lab safety instructions.</h4></div></div>
+  <div class="list-row"><span class="check">●</span><div><h4>Respect faculty and students.</h4></div></div>
+  <div class="list-row"><span class="check">●</span><div><h4>Submit assignments on time.</h4></div></div>
+  <div class="list-row"><span class="check">●</span><div><h4>Follow examination policies.</h4></div></div>
+</section>
+
+<section class="panel searchable" id="resources">
+  <div class="panel-title"><div class="panel-icon">📚</div><div><h3>Additional Resources</h3><p>Learning links</p></div></div>
+  <div class="resource"><span class="resource-icon">📖</span><div><h4><a href="https://nptel.ac.in/" target="_blank" rel="noopener">Study Materials ↗</a></h4><p>NPTEL courses</p></div></div>
+  <div class="resource"><span class="resource-icon">💻</span><div><h4><a href="https://www.learn-c.org/" target="_blank" rel="noopener">Programming Practice ↗</a></h4><p>Learn C programming</p></div></div>
+  <div class="resource"><span class="resource-icon">🎓</span><div><h4><a href="https://swayam.gov.in/" target="_blank" rel="noopener">Online Courses ↗</a></h4><p>Explore SWAYAM</p></div></div>
+  <div class="resource"><span class="resource-icon">🗓️</span><div><h4><a href="#timetable">Study Planner ↗</a></h4><p>Organize your studies</p></div></div>
+</section>
+</div>
+
+<footer><span>© 2026 Freshman Guide | Student Portal</span><span>Learn · Grow · Succeed ♥</span></footer>
+</main>
+
+<script>
+const sidebar = document.getElementById("sidebar");
+const menuButton = document.getElementById("menuButton");
+const search = document.getElementById("search");
+
+menuButton.addEventListener("click", () => {
+  sidebar.classList.toggle("open");
+});
+
+document.querySelectorAll(".nav-link").forEach(link => {
+  link.addEventListener("click", () => {
+    sidebar.classList.remove("open");
+  });
+});
+
+const sections = document.querySelectorAll("main section[id]");
+const links = document.querySelectorAll(".nav-link");
+
+function highlightNavigation() {
+  let current = "home";
+  sections.forEach(section => {
+    if (window.scrollY >= section.offsetTop - 130) {
+      current = section.id;
+    }
+  });
+  links.forEach(link => {
+    link.classList.toggle("active", link.hash === "#" + current);
+  });
+}
+window.addEventListener("scroll", highlightNavigation);
+window.addEventListener("load", highlightNavigation);
+
+search.addEventListener("input", () => {
+  const query = search.value.toLowerCase().trim();
+  document.querySelectorAll(".searchable").forEach(section => {
+    section.classList.toggle(
+      "hidden",
+      query !== "" && !section.innerText.toLowerCase().includes(query)
+    );
+  });
+});
+
+search.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    search.value = "";
+    search.dispatchEvent(new Event("input"));
+  }
+});
+</script>
+</body>
+</html>
